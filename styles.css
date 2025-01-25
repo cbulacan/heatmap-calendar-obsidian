@@ -28,7 +28,6 @@
 
 .heatmap-calendar-months {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr)); /* TODO: figure out a way to make this dynamic based on weeks parameter */
   grid-area: months;
   margin-top: 0.1em;
   margin-bottom: 0.3em;
@@ -44,7 +43,6 @@
 
 .heatmap-calendar-boxes {
   grid-auto-flow: column;
-  grid-template-columns: repeat(13, minmax(0, 1fr)); /* TODO: figure out a way to make this dynamic based on weeks parameter */
   grid-area: boxes;
 }
 

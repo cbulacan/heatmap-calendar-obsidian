@@ -63,9 +63,9 @@ export default class HeatmapCalendar extends Plugin {
 		)
 	}
 
-	getStartDate(date: Date): Date {
+	getStartDate(date: Date, weeks: number): Date {
 		return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) -
-			this.settings.weeks * 7 * 24 * 60 * 60 * 1000
+			weeks * 7 * 24 * 60 * 60 * 1000
 		)
 	}
 	/**
@@ -107,7 +107,7 @@ export default class HeatmapCalendar extends Plugin {
 
 			// for week conversion
 			// get startDate
-			const startDate = this.getStartDate(new Date());
+			const startDate = this.getStartDate(new Date(), calendarData.weeks);
 			console.log("start date")
 			console.log(startDate)
 			// get previous day on or before starDate that is weekStartDay
@@ -179,9 +179,9 @@ export default class HeatmapCalendar extends Plugin {
 			const todaysDayNumberLocal = this.getHowManyDaysIntoYearLocal(new Date())
 
 			console.log("box dates")
-			console.log((this.settings.weeks * 7 + numberOfDaysBeforeStartDateWeekStarts))
+			console.log((calendarData.weeks * 7 + numberOfDaysBeforeStartDateWeekStarts))
 			let months: string[] = []
-			for (let day = 0; day < (this.settings.weeks * 7 + numberOfDaysBeforeStartDateWeekStarts); day++) {
+			for (let day = 0; day < (calendarData.weeks * 7 + numberOfDaysBeforeStartDateWeekStarts); day++) {
 
 				const box: Box = {
                     classNames: [],
@@ -225,6 +225,9 @@ export default class HeatmapCalendar extends Plugin {
 			})
 
 			const heatmapCalendarMonthsUl = createEl("ul", {
+				attr: {
+					"style": `grid-template-columns: repeat(${calendarData.weeks/4 + 1}, minmax(0, 1fr));`
+				},
 				cls: "heatmap-calendar-months",
 				parent: heatmapCalendarGraphDiv,
 			})
@@ -248,6 +251,9 @@ export default class HeatmapCalendar extends Plugin {
 			// createEl("li", { text: "Dec", parent: heatmapCalendarMonthsUl, })
 
 			const heatmapCalendarDaysUl = createEl("ul", {
+				attr: {
+					"style": 'color: #8954A8'
+				},
 				cls: "heatmap-calendar-days",
 				parent: heatmapCalendarGraphDiv,
 			})
@@ -257,6 +263,9 @@ export default class HeatmapCalendar extends Plugin {
 			}
 
 			const heatmapCalendarBoxesUl = createEl("ul", {
+				attr: {
+					"style": `grid-template-columns: repeat(${calendarData.weeks+1}, minmax(0, 1fr))`
+				},
 				cls: "heatmap-calendar-boxes",
 				parent: heatmapCalendarGraphDiv,
 			})
