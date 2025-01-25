@@ -14,6 +14,7 @@ interface CalendarData {
 	intensityScaleStart: number;
 	intensityScaleEnd: number;
 	weeks: number;
+	hideYear: boolean;
 }
 
 interface CalendarSettings extends CalendarData {
@@ -43,6 +44,7 @@ const DEFAULT_SETTINGS: CalendarSettings = {
 	intensityScaleEnd: 5,
 	weekStartDay: 0,
 	weeks: 12,
+	hideYear: true
 };
 export default class HeatmapCalendar extends Plugin {
 	settings: CalendarSettings;
@@ -316,8 +318,12 @@ export default class HeatmapCalendar extends Plugin {
 				cls: "heatmap-calendar-graph",
 				parent: el,
 			});
-
 			createDiv({
+				attr: {
+					style: `
+						visibility: ${calendarData.hideYear == true ? "hidden" : "visible"}
+					`,
+				},
 				cls: "heatmap-calendar-year",
 				text: String(year).slice(2),
 				parent: heatmapCalendarGraphDiv,
