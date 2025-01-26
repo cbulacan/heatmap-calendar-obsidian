@@ -318,11 +318,15 @@ export default class HeatmapCalendar extends Plugin {
 				cls: "heatmap-calendar-graph",
 				parent: el,
 			});
+			let yearVisibility = "visible";
+			if (calendarData.hideYear ?? this.settings.hideYear) {
+				yearVisibility = "hidden"
+			}
+
+			console.log(yearVisibility) 
 			createDiv({
 				attr: {
-					style: `
-						visibility: ${calendarData.hideYear == true ? "hidden" : "visible"}
-					`,
+					style: `visibility: ${yearVisibility}`,
 				},
 				cls: "heatmap-calendar-year",
 				text: String(year).slice(2),
