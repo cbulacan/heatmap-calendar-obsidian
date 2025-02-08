@@ -249,9 +249,10 @@ export default class HeatmapCalendar extends Plugin {
 				new Date()
 			);
 
-			console.log("box dates");
+			const boxCount = calendarData.weeks * 7 + numberOfDaysBeforeStartDateWeekStarts + 1
+			console.log("boxCount");
 			console.log(
-				calendarData.weeks * 7 + numberOfDaysBeforeStartDateWeekStarts
+				boxCount
 			);
 			let months: string[] = [];
 			let weekLabels: string[] = [];
@@ -259,7 +260,7 @@ export default class HeatmapCalendar extends Plugin {
 			for (
 				let day = 0;
 				day <
-				calendarData.weeks * 7 + numberOfDaysBeforeStartDateWeekStarts;
+				boxCount;
 				day++
 			) {
 				const box: Box = {
@@ -294,8 +295,8 @@ export default class HeatmapCalendar extends Plugin {
 					}
 					currentWeek++;
 				}
-				if (day === todaysDayNumberLocal && showCurrentDayBorder)
-					box.classNames?.push("today");
+				// if (day === todaysDayNumberLocal && showCurrentDayBorder)
+				// 	box.classNames?.push("today");
 
 				if (mappedEntries[day]) {
 					box.classNames?.push("hasData");
@@ -310,7 +311,11 @@ export default class HeatmapCalendar extends Plugin {
 						: colors[Object.keys(colors)[0]];
 					box.backgroundColor =
 						currentDayColors[(entry.intensity as number) - 1];
-				} else box.classNames?.push("isEmpty");
+				} else {
+					console.log("unmapped")
+					console.log(day)
+					box.classNames?.push("isEmpty")
+				};
 				boxes.push(box);
 			}
 
